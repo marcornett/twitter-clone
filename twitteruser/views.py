@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from tweet.models import Tweet
 from twitteruser.models import TwitterUser
 from django.contrib.auth.decorators import login_required
@@ -7,7 +7,12 @@ from django.contrib.auth.decorators import login_required
 def profile_view(request):
     user = TwitterUser.objects.get(username=request.user.username)
     tweets = Tweet.objects.filter(user=request.user).order_by('-date_created')
-    context = {'tweets': tweets, 'user': user}
+    num_of_followers = len(user.follow.all())
+    context = {
+        'tweets': tweets, 
+        'user': user,
+        'num_of_followers': num_of_followers,
+        }
     return render(request, 'twitteruser/user.html', context)
 
 def user_view(request, username):
@@ -20,10 +25,10 @@ def user_view(request, username):
             current_user.follow.remove(user)
         else:
             current_user.follow.add(user)
+        return redirect(f'/user/{username}')
     context = {
         'tweets': tweets,
         'user': user,
         'follower': follower,
-        # 'num_of_followers': num_of_followers,
     }
     return render(request, 'twitteruser/user.html', context)
