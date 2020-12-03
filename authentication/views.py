@@ -8,14 +8,13 @@ from tweet.models import Tweet
 
 @login_required
 def index(request):
-    # tweets = Tweet.objects.filter(user=request.user).order_by('-date_created')
-
     user = TwitterUser.objects.get(username=request.user.username)
-    followers = user.follow
-    # breakpoint()
-    tweets = Tweet.objects.filter(user__username__in=[followers])
-    # TODO: List at all tweets from current user and all users the user is following
-    # TODO: https://stackoverflow.com/questions/9410647/how-to-filter-model-results-for-multiple-values-for-a-many-to-many-field-in-djan
+    followers = user.follow.all()
+    follow_list = [request.user]
+    for follower in followers:
+        follow_list.append(follower)
+
+    tweets = Tweet.objects.filter(user__username__in=follow_list).order_by('-date_created')
     context = {'tweets': tweets}
     return render(request, 'authentication/index.html', context)
 
@@ -29,6 +28,7 @@ def sign_up_view(request):
             new_user = TwitterUser.objects.create_user(
                 username=data['username'],
                 password=data['password'],
+                display=data['display']
             )
             login(request, new_user)
             return redirect('index')
