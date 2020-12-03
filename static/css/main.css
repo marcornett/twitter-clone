@@ -1,0 +1,60 @@
+/* Main */
+
+body{
+    display: grid;
+    grid-template-columns: minmax(350px, 20%) 1fr;
+}
+
+a:hover{
+    text-decoration: none !important;
+}
+
+#banner{
+    padding: 20px 0px 10px 20px;
+    margin-bottom: 10px;
+    background-color: rgb(0,123,255);
+}
+
+#banner h2{
+    color: white;
+}
+
+
+/* Navbar */
+
+ul li{
+    list-style-type: none;
+}
+
+.left_panel{
+    z-index: 3;
+    /* position: fixed; */
+}
+
+.left_panel > nav > ul > img{
+    width: 60px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.profile_link{
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 10px;
+}
+
+
+/* Index */
+
+.tweet{
+    margin-bottom: 20px;
+}
+
+/* Notifications */
+
+#no_notifications{
+    font-size: 20px;
+    display: grid;
+    place-items: center;
+    margin-top: 300px;
+}
