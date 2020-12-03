@@ -1,37 +1,37 @@
 {% extends 'main.html' %}
 {% block content %}
+<div>
+    <h1>{{ user.display }}</h1>
+    <p>Following: {{ num_of_following }}</p>
 
-<h1>{{ user.display }}</h1>
-<p>Following: {{ num_of_fllowers }}</p>
+    <p>Tweets: {{ tweets|length }}</p>
 
-<p>Tweets: {{ tweets|length }}</p>
-<p>Followers: {{ num_of_followers }}</p>
-
-{% if follower|length > 0 %}
-    {% if request.user != user and request.user.is_authenticated %}
-    <form action="" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Unfollow">
-    </form>
+    {% if follower|length > 0 %}
+        {% if request.user != user and request.user.is_authenticated %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Unfollow">
+        </form>
+        {% endif %}
+    {% else %}
+        {% if request.user != user and request.user.is_authenticated %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Follow">
+        </form>
+        {% endif %}
     {% endif %}
-{% else %}
-    {% if request.user != user and request.user.is_authenticated %}
-    <form action="" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Follow">
-    </form>
-    {% endif %}
-{% endif %}
 
-{% for tweet in tweets %}
-    <p>{{ tweet.date_created }}</p>
-    <a href="/tweet/{{ tweet.id }}">
-        <p>{{tweet.tweet}}</p>
-    </a>
-    <a href="/user/{{ tweet.user.username }}">
-        <p>{{ tweet.user.display }}</p>
-    </a>
-    <hr>
-{% endfor %}
+    {% for tweet in tweets %}
+        <p>{{ tweet.date_created }}</p>
+        <a href="/tweet/{{ tweet.id }}">
+            <p>{{tweet.tweet}}</p>
+        </a>
+        <a href="/user/{{ tweet.user.username }}">
+            <p>{{ tweet.user.display }}</p>
+        </a>
+        <hr>
+    {% endfor %}
+</div>
 
 {% endblock content %}
