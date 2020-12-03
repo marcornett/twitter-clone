@@ -1,3 +1,8 @@
+{% extends 'main.html' %}
+{% block content %}
+<h1>{{ tweet.user.display }}'s' tweet</h1>
 <p>{{ tweet.user.display }}</p>
 <p>{{ tweet.date_created }}</p>
 <p>{{ tweet.tweet }}</p>
+
+{% endblock %}

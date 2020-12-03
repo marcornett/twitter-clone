@@ -1,16 +1,25 @@
 {% extends 'main.html' %}
 {% block content %}
-
-{% comment %} Tweets user is following {% endcomment %}
-<h1>Home</h1>
-{% for tweet in tweets %}
-    <a href="/user/{{ tweet.user.username }}">
-        <p>{{tweet.user.username}}</p>
-    </a>
-    <a href="/tweet/{{ tweet.id }}">
-        <p>{{tweet.tweet}}</p>
-    </a>
-    <p>{{tweet.date_created}}</p>
-    <hr>
-{% endfor %}
+<div class="home">
+    <div id="banner">
+        <h2>Home</h2>
+    </div>
+    <div class="tweets">
+        {% for tweet in tweets %}
+            <div class="nes-container with-title tweet">
+                
+                    <p class="title">
+                        <a href="/user/{{ tweet.user.username }}">
+                        @{{ tweet.user.display }}
+                        </a>
+                    </p>
+                
+                <a href="/tweet/{{ tweet.id }}" class="nes-text is-success">
+                    <p>{{tweet.tweet}}</p>
+                </a>
+                <p>{{tweet.date_created}}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock content %}

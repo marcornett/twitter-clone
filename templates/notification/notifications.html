@@ -1,11 +1,20 @@
 {% extends 'main.html' %}
 {% block content %}
-
-<h1>Notifications</h1>
-{% for tweet in tweets %}
-    <ul>
-        <li>{{ tweet }}</li>
-    </ul>
-{% endfor %}
+<div>
+    <div id="banner">
+        <h2>Notifications</h2>
+    </div>
+    {% if tweets %}
+        {% for tweet in tweets %}
+            <ul>
+                <li>{{ tweet }}</li>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <ul id="no_notifications">
+            <li>Nothing to report</li>
+        </ul>
+{% endif %}
+</div>
 
 {% endblock content %}

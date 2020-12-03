@@ -2,23 +2,25 @@
 {% block content %}
 
 <h1>{{ user.display }}</h1>
-{% comment %} <p>Following: {{ num_of_fllowers }}</p> {% endcomment %}
+<p>Following: {{ num_of_fllowers }}</p>
+
 <p>Tweets: {{ tweets|length }}</p>
+<p>Followers: {{ num_of_followers }}</p>
 
 {% if follower|length > 0 %}
     {% if request.user != user and request.user.is_authenticated %}
     <form action="" method="post">
         {% csrf_token %}
-        <input type="submit" value="Follow">
+        <input type="submit" value="Unfollow">
     </form>
     {% endif %}
 {% else %}
     {% if request.user != user and request.user.is_authenticated %}
     <form action="" method="post">
         {% csrf_token %}
-        <input type="submit" value="Unfollow">
+        <input type="submit" value="Follow">
     </form>
-    {% endif %} 
+    {% endif %}
 {% endif %}
 
 {% for tweet in tweets %}
