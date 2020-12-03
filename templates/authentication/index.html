@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+{% block content %}
+
+{% comment %} Tweets user is following {% endcomment %}
+<h1>Home</h1>
+{% for tweet in tweets %}
+    <a href="/user/{{ tweet.user.username }}">
+        <p>{{tweet.user.username}}</p>
+    </a>
+    <a href="/tweet/{{ tweet.id }}">
+        <p>{{tweet.tweet}}</p>
+    </a>
+    <p>{{tweet.date_created}}</p>
+    <hr>
+{% endfor %}
+{% endblock content %}

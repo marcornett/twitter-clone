@@ -1,0 +1,11 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<h1>Notifications</h1>
+{% for tweet in tweets %}
+    <ul>
+        <li>{{ tweet }}</li>
+    </ul>
+{% endfor %}
+
+{% endblock content %}
