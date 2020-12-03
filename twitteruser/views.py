@@ -7,11 +7,11 @@ from django.contrib.auth.decorators import login_required
 def profile_view(request):
     user = TwitterUser.objects.get(username=request.user.username)
     tweets = Tweet.objects.filter(user=request.user).order_by('-date_created')
-    num_of_followers = len(user.follow.all())
+    num_of_following = len(user.follow.all())
     context = {
         'tweets': tweets, 
         'user': user,
-        'num_of_followers': num_of_followers,
+        'num_of_following': num_of_following,
         }
     return render(request, 'twitteruser/user.html', context)
 
