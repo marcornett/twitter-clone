@@ -1,11 +1,13 @@
 {% extends 'main.html' %}
 {% block content %}
-<div>
-    <h1>{{ title }}</h1>
+<div class="middle_column">
+    <div id="banner" class="nes-container is-rounded">
+        <h2>{{ title }}</h2>
+    </div>
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Tweet" class="nes-btn">
+        <input type="submit" value="{{ title }}" class="nes-btn">
     </form>
 </div>
 

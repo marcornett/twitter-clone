@@ -6,7 +6,7 @@ from twitteruser.views import get_user
 from .forms import SignUpForm, LoginForm
 from twitteruser.models import TwitterUser
 from tweet.models import Tweet
-
+from twitteruser.views import get_recent_users
 
 @login_required
 def index(request):
@@ -18,9 +18,12 @@ def index(request):
 
     tweets = Tweet.objects.filter(
         user__username__in=follow_list).order_by('-date_created')
-    context = {'tweets': tweets}
+    recent_users = get_recent_users()
+    context = {
+        'tweets': tweets,
+        'recent_users': recent_users
+        }
     return render(request, 'authentication/index.html', context)
-
 
 def sign_up_view(request):
     form = SignUpForm()
@@ -35,8 +38,12 @@ def sign_up_view(request):
             )
             login(request, new_user)
             return redirect('index')
-
-    context = {'form': form, 'title': 'Sign Up'}
+    recent_users = get_recent_users()
+    context = {
+        'form': form,
+        'title': 'Sign Up',
+        'recent_users': recent_users
+        }
     return render(request, 'authentication/generic_form.html', context)
 
 
@@ -55,8 +62,12 @@ def login_view(request):
                 login(request, user)
                 next_page = request.GET['next']
                 return HttpResponseRedirect(next_page)
-
-    context = {'form': form, 'title': 'Login'}
+    recent_users = get_recent_users()
+    context = {
+        'form': form, 
+        'title': 'Login',
+        'recent_users': recent_users
+        }
     return render(request, 'authentication/generic_form.html', context)
 
 

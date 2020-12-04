@@ -1,18 +1,18 @@
 {% extends 'main.html' %}
 {% block content %}
-<div>
-    <div id="banner">
+<div class="middle_column">
+    <div id="banner" class="nes-container is-rounded">
         <h2>Notifications</h2>
     </div>
     {% if tweets %}
         {% for tweet in tweets %}
-            <ul>
-                <li>{{ tweet }}</li>
-            </ul>
+            <div class="tweet nes-container is-rounded">
+                <p>{{ tweet }}</p>
+            </div>
         {% endfor %}
     {% else %}
         <ul id="no_notifications">
-            <li>Nothing to report</li>
+            <li class="nes-text is-error">Error, nothing to report</li>
         </ul>
 {% endif %}
 </div>

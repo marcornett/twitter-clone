@@ -18,5 +18,16 @@
 
     {% block content %}
     {% endblock content %}
+    
+    <div class="right_panel">
+        <div class="new_users">
+            <h3>Recent <br> Users</h3>
+            {% for user in recent_users %}
+                <a href="/user/{{ user.username }}">
+                    <p>{{ user.display }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>

@@ -1,12 +1,12 @@
 {% extends 'main.html' %}
 {% block content %}
-<div class="home">
-    <div id="banner">
+<div class="middle_column">
+    <div id="banner" class="nes-container is-rounded">
         <h2>Home</h2>
     </div>
-    <div class="tweets">
+    <div>
         {% for tweet in tweets %}
-            <div class="nes-container with-title tweet">
+            <div class="tweet nes-container is-rounded with-title">
                 
                     <p class="title">
                         <a href="/user/{{ tweet.user.username }}">

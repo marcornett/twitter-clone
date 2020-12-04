@@ -3,17 +3,21 @@
 <div class="left_panel">
     <nav>
         <ul>
-            {% comment %} <img src="{% static '/images/twitter_logo.png' %}" alt="Twitter"> {% endcomment %}
-            <img class="nes-avatar is-rounded is-medium" alt="Twitter Logo" src="{% static '/images/twitter_logo.png' %}" style="image-rendering: pixelated;">
-            {% comment %} {% if request.user.is_authenticated %}
-                <li>Hello, {{ request.user.display }}</li>
-            {% endif %} {% endcomment %}
+        
+            <img 
+                class="nes-avatar is-rounded is-large"
+                alt="Twitter Logo" 
+                src="{% static '/images/twitter_logo.png' %}" 
+                style="image-rendering: pixelated;"
+            >
             <li><a href="/">Home</a></li>
             <li><a href="/tweet/create-tweet/">Tweet</a></li>
             <li><a href="/notifications/">Notifications</a></li>
             
             {% if not request.user.is_authenticated %}
-                <li><a href="/login/?next=/">Login</a></li>
+                <li><a href="/login/?next=/">
+                    Login
+                </a></li>
             {% endif %}
                 {% if not request.user.is_authenticated %}
                 <li><a href="/signup/">Sign Up</a></li>
@@ -26,11 +30,12 @@
 
         <div class="profile_link">
             <ul>
-                <li>Profile</li>
+                
                 <li>
                     <a href="/user/profile/">
                     <button type="button" class="nes-btn is-primary">
                         @{{ request.user.display }}
+                        <li id="profile_button_desc">Profile</li>
                     </button>
                     </a>
                 </li>
