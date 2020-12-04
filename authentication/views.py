@@ -2,19 +2,22 @@ from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 
+from twitteruser.views import get_user
 from .forms import SignUpForm, LoginForm
 from twitteruser.models import TwitterUser
 from tweet.models import Tweet
 
+
 @login_required
 def index(request):
-    user = TwitterUser.objects.get(username=request.user.username)
+    user = get_user(request.user.username)
     followers = user.follow.all()
     follow_list = [request.user]
     for follower in followers:
         follow_list.append(follower)
 
-    tweets = Tweet.objects.filter(user__username__in=follow_list).order_by('-date_created')
+    tweets = Tweet.objects.filter(
+        user__username__in=follow_list).order_by('-date_created')
     context = {'tweets': tweets}
     return render(request, 'authentication/index.html', context)
 
@@ -55,6 +58,7 @@ def login_view(request):
 
     context = {'form': form, 'title': 'Login'}
     return render(request, 'authentication/generic_form.html', context)
+
 
 def logout_view(request):
     logout(request)
