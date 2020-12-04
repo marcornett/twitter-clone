@@ -6,10 +6,12 @@ from notification.models import Notifications
 from django.contrib.auth.decorators import login_required
 import re
 
+
 def tweet_view(request, id):
     tweet = Tweet.objects.get(id=id)
     context = {'tweet': tweet}
     return render(request, 'tweet/tweet.html', context)
+
 
 @login_required()
 def create_tweet(request):
@@ -21,7 +23,6 @@ def create_tweet(request):
             tweet = data['tweet']
             pattern = re.compile(r'@(\w+)')
             names = pattern.findall(tweet)
-            
             tweet_model = Tweet.objects.create(
                 user=request.user,
                 tweet=data['tweet']
@@ -37,3 +38,8 @@ def create_tweet(request):
             return redirect('/')
     context = {'form': form}
     return render(request, 'authentication/generic_form.html', context)
+
+
+def filter_tweets(user):
+    tweets = Tweet.objects.filter(user=user)
+    return tweets
