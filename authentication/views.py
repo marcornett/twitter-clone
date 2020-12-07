@@ -8,26 +8,40 @@ from twitteruser.models import TwitterUser
 from tweet.models import Tweet
 from twitteruser.views import get_recent_users
 
-@login_required
-def index(request):
-    user = get_user(request.user.username)
-    followers = user.follow.all()
-    follow_list = [request.user]
-    for follower in followers:
-        follow_list.append(follower)
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-    tweets = Tweet.objects.filter(
-        user__username__in=follow_list).order_by('-date_created')
-    recent_users = get_recent_users()
-    context = {
-        'tweets': tweets,
-        'recent_users': recent_users
-        }
-    return render(request, 'authentication/index.html', context)
 
-def sign_up_view(request):
-    form = SignUpForm()
-    if request.method == "POST":
+class IndexView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = get_user(request.user.username)
+        followers = user.follow.all()
+        follow_list = [request.user]
+        for follower in followers:
+            follow_list.append(follower)
+
+        tweets = Tweet.objects.filter(
+            user__username__in=follow_list).order_by('-date_created')
+        recent_users = get_recent_users()
+        context = {
+            'tweets': tweets,
+            'recent_users': recent_users
+            }
+        return render(request, 'authentication/index.html', context)
+
+
+class SignUpView(View):
+    def get(self, request):
+        form = SignUpForm()
+        recent_users = get_recent_users()
+        context = {
+            'form': form,
+            'title': 'Sign Up',
+            'recent_users': recent_users
+            }
+        return render(request, 'authentication/generic_form.html', context)
+    
+    def post(self, request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -38,18 +52,20 @@ def sign_up_view(request):
             )
             login(request, new_user)
             return redirect('index')
-    recent_users = get_recent_users()
-    context = {
-        'form': form,
-        'title': 'Sign Up',
-        'recent_users': recent_users
+
+
+class LoginView(View):
+    def get(self, request):
+        form = LoginForm()
+        recent_users = get_recent_users()
+        context = {
+            'form': form,
+            'title': 'Login',
+            'recent_users': recent_users
         }
-    return render(request, 'authentication/generic_form.html', context)
-
-
-def login_view(request):
-    form = LoginForm()
-    if request.method == "POST":
+        return render(request, 'authentication/generic_form.html', context)
+    
+    def post(self, request):
         form = LoginForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -62,15 +78,10 @@ def login_view(request):
                 login(request, user)
                 next_page = request.GET['next']
                 return HttpResponseRedirect(next_page)
-    recent_users = get_recent_users()
-    context = {
-        'form': form, 
-        'title': 'Login',
-        'recent_users': recent_users
-        }
-    return render(request, 'authentication/generic_form.html', context)
 
 
-def logout_view(request):
-    logout(request)
-    return redirect('index')
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('index')
+
