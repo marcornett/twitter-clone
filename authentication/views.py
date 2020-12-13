@@ -1,13 +1,10 @@
 from django.shortcuts import render, HttpResponseRedirect, redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-
 from twitteruser.views import get_user
 from .forms import SignUpForm, LoginForm
 from twitteruser.models import TwitterUser
 from tweet.models import Tweet
 from twitteruser.views import get_recent_users
-
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -40,7 +37,7 @@ class SignUpView(View):
             'recent_users': recent_users
             }
         return render(request, 'authentication/generic_form.html', context)
-    
+
     def post(self, request):
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -64,7 +61,7 @@ class LoginView(View):
             'recent_users': recent_users
         }
         return render(request, 'authentication/generic_form.html', context)
-    
+
     def post(self, request):
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -84,4 +81,3 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('index')
-
