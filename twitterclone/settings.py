@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'notification',
     'tweet',
     'twitteruser',
-    'rotatesecretkey'
 ]
 
 MIDDLEWARE = [
@@ -56,15 +55,10 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'rotatesecretkey.middleware.RotateAuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-SESSION_ENGINE ='rotatesecretkey.sessions'
-
-SILENCED_SYSTEM_CHECKS = ['admin.E408',]
 
 ROOT_URLCONF = 'twitterclone.urls'
 
