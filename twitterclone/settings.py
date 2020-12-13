@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import environ
+import binascii
 
 env = environ.Env()
 environ.Env.read_env()
@@ -46,7 +47,8 @@ INSTALLED_APPS = [
     'authentication',
     'notification',
     'tweet',
-    'twitteruser'
+    'twitteruser',
+    'rotatesecretkey'
 ]
 
 MIDDLEWARE = [
@@ -54,10 +56,15 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'rotatesecretkey.middleware.RotateAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SESSION_ENGINE ='rotatesecretkey.sessions'
+
+SILENCED_SYSTEM_CHECKS = ['admin.E408',]
 
 ROOT_URLCONF = 'twitterclone.urls'
 
