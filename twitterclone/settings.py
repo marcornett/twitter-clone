@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import environ
+import binascii
 
 env = environ.Env()
 environ.Env.read_env()
@@ -25,6 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -45,7 +47,8 @@ INSTALLED_APPS = [
     'authentication',
     'notification',
     'tweet',
-    'twitteruser'
+    'twitteruser',
+    'rotatesecretkey'
 ]
 
 MIDDLEWARE = [
@@ -53,10 +56,15 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'rotatesecretkey.middleware.RotateAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SESSION_ENGINE ='rotatesecretkey.sessions'
+
+SILENCED_SYSTEM_CHECKS = ['admin.E408',]
 
 ROOT_URLCONF = 'twitterclone.urls'
 
@@ -95,20 +103,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': """django.contrib.auth.password_validation. \
-            'UserAttributeSimilarityValidator""",
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': """django.contrib.auth.password_validation. \
-            MinimumLengthValidator""",
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': """django.contrib.auth.password_validation. \
-            CommonPasswordValidator""",
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': """django.contrib.auth.password_validation. \
-            NumericPasswordValidator""",
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
