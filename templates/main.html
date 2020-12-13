@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+
+    <!-- latest -->
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+</head>
+<body>
+    {% include 'authentication/navbar.html' %}
+
+    {% block content %}
+    {% endblock content %}
+    
+    <div class="right_panel">
+        <div class="new_users">
+            <h3>Recent <br> Users</h3>
+            {% for user in recent_users %}
+                <a href="/user/{{ user.username }}">
+                    <p>{{ user.display }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

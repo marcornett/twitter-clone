@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="middle_column">
+    <div id="banner" class="nes-container is-rounded">
+        <h2>Home</h2>
+    </div>
+    <div>
+        {% for tweet in tweets %}
+            <div class="tweet nes-container is-rounded with-title">
+                
+                    <p class="title">
+                        <a href="/user/{{ tweet.user.username }}">
+                        @{{ tweet.user.display }}
+                        </a>
+                    </p>
+                
+                <a href="/tweet/{{ tweet.id }}" class="nes-text is-success">
+                    <p>{{tweet.tweet}}</p>
+                </a>
+                <p>{{tweet.date_created}}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

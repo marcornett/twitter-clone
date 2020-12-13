@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="middle_column">
+    <div id="banner" class="nes-container is-rounded">
+        <h2>{{ tweet.user.display }}'s tweet</h2>
+    </div>
+        
+    <div class="tweet nes-container is-rounded with-title">
+        <p>{{ tweet.user.display }}</p>
+        <p>{{ tweet.date_created }}</p>
+        <p>{{ tweet.tweet }}</p>
+    </div>
+</div>
+
+{% endblock %}

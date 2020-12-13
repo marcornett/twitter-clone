@@ -1,0 +1,102 @@
+/* Main */
+
+body{
+    display: grid;
+    grid-template-columns: minmax(350px, 20%) 3fr 1fr;
+    height: 100vh;
+}
+
+a:hover{
+    text-decoration: none !important;
+}
+
+.right_panel{
+    background-color: rgb(154, 215, 255);
+}
+
+
+.right_panel div{
+    z-index: 3;
+    position: fixed;
+    padding-top: 105px;
+    padding-left: 35px;
+}
+
+.new_users a p{
+    font-size: 12px;
+}
+
+#banner{
+    padding: 20px 0px 10px 20px;
+    margin-bottom: 10px;
+    background-color: rgb(33,156,238);
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+
+#banner h2{
+    color: white;
+}
+
+
+
+/* Navbar */
+
+ul li{
+    list-style-type: none;
+}
+
+.left_panel{
+    background-color: rgb(154, 215, 255);
+}
+
+.left_panel nav{
+    z-index: 3;
+    position: fixed;
+}
+
+.left_panel > nav > ul > img{
+    width: 60px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.profile_link{
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 10px;
+}
+
+
+/* Index */
+
+.tweet{
+    background-color: white;
+    margin-bottom: 20px !important;
+}
+
+/* Notifications */
+
+#no_notifications{
+    font-size: 20px;
+    display: grid;
+    place-items: center;
+    margin-top: 300px;
+}
+
+/* User */
+
+.follow_button{
+    text-align: center;
+    margin: 20px;
+}
+
+.banner_user{
+    padding: 20px 0px 10px 20px;
+    margin-bottom: 10px;
+}
+
+.tweet #date{
+    font-size: 12px;
+}

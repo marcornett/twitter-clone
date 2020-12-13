@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="middle_column">
+    
+    <div id="banner_user" class="nes-container is-rounded">
+        <h2>{{ user.display }}</h2>
+        <span class="nes-badge">
+            <span class="is-primary">Tweets: {{ tweets|length }}</span>
+        </span>
+        {% if request.user == user and request.user.is_authenticated %}
+            {% if user.display == request.user.display %}
+                <span>Following: {{ num_of_following }}</span>
+            {% endif %}
+        {% endif %}
+    </div>
+        
+        
+        <div class="follow_button">
+            {% if follower|length > 0 %}
+                {% if request.user != user and request.user.is_authenticated %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Unfollow" class="nes-btn is-error">
+                </form>
+                {% endif %}
+            {% else %}
+                {% if request.user != user and request.user.is_authenticated %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Follow" class="nes-btn is-success">
+                </form>
+                {% endif %}
+            {% endif %}
+        </div>
+
+    {% for tweet in tweets %}
+            <div class="tweet nes-container is-rounded with-title">
+                    <p class="title">
+                        <a href="/user/{{ tweet.user.username }}">
+                        @{{ tweet.user.display }}
+                        </a>
+                    </p>
+                <a href="/tweet/{{ tweet.id }}" class="nes-text is-success">
+                    <p>{{tweet.tweet}}</p>
+                </a>
+                <p id="date">{{tweet.date_created}}</p>
+            </div>
+        {% endfor %}
+</div>
+
+{% endblock content %}
